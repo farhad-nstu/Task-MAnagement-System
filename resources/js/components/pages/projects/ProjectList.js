@@ -58,9 +58,13 @@ class ProjectList extends React.Component {
             </Card.Header>
             <Card.Body>
               <Card.Text>{project.description}</Card.Text>
-              <Button variant="primary" className="mr-2">
+              {/* <TaskList taskList={project.tasks} isDetailsView={false} /> */}
+              <Link
+                to={`${PUBLIC_URL}projects/view/${project.id}`}
+                className="btn btn-primary mr-2"
+              >
                 View
-              </Button>
+              </Link>
               <Button variant="success" className="mr-2">
                 Edit
               </Button>
