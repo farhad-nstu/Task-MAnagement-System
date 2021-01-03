@@ -3,6 +3,11 @@ import { Card, Button, Badge, Spinner } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import Axios from "axios";
 import { PUBLIC_URL } from "../../../constants";
+import TaskList from "../tasks/TaskList";
+import {
+  deleteProject,
+  getProjectList,
+} from "../../../services/ProjectService";
 
 class ProjectList extends React.Component {
   state = {
@@ -14,15 +19,28 @@ class ProjectList extends React.Component {
     this.getProjectLists();
   }
 
-  getProjectLists = () => {
+  getProjectLists = async () => {
     this.setState({ isLoading: true });
-    Axios.get("http://localhost:8000/api/projects").then((res) => {
-      const projectList = res.data.data;
+    const response = await getProjectList();
+    if (response.success) {
       this.setState({
-        projectList,
+        projectList: response.data,
         isLoading: false,
       });
-    });
+    } else {
+      this.setState({
+        isLoading: false,
+      });
+    }
+  };
+
+  deleteProject = async (id) => {
+    const response = await deleteProject(id);
+    if (response.success) {
+      this.getProjectLists();
+    } else {
+      alert("Sorry !! Something went wrong !!");
+    }
   };
 
   render() {
@@ -65,10 +83,11 @@ class ProjectList extends React.Component {
               >
                 View
               </Link>
-              <Button variant="success" className="mr-2">
-                Edit
-              </Button>
-              <Button variant="danger" className="mr-2">
+              <Button
+                variant="danger"
+                className="mr-2"
+                onClick={() => this.deleteProject(project.id)}
+              >
                 Delete
               </Button>
             </Card.Body>

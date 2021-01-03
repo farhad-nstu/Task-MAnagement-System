@@ -1,6 +1,12 @@
 import Axios from "axios";
 
-export const getProjectList = () => {};
+export const getProjectList = async () => {
+  return await Axios.get("http://localhost:8000/api/projects").then(
+    (res) => {
+      return res.data;
+    }
+  );
+}
 
 /**
  * storeNewProject()
@@ -22,6 +28,14 @@ export const updateProject = async (id, data) => {
   return await Axios.put(
     `http://localhost:8000/api/projects/${id}`,
     data
+  ).then((res) => {
+    return res.data;
+  });
+};
+
+export const deleteProject = async (id) => {
+  return await Axios.delete(
+    `http://localhost:8000/api/projects/${id}`
   ).then((res) => {
     return res.data;
   });

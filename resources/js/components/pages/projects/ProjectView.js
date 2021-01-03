@@ -37,6 +37,7 @@ class ProjectView extends React.Component {
 
   toggleAddTask = () => {
     this.setState({
+      toggleEditProject: false,
       toggleAddTask: !this.state.toggleAddTask,
     });
   };
@@ -60,6 +61,10 @@ class ProjectView extends React.Component {
   onCompleteProjectEdit = () => {
     this.getProjectDetails();
     this.toggleEditProject();
+  };
+
+  onEditTask = () => {
+    this.getProjectDetails();
   };
 
   render() {
@@ -132,7 +137,7 @@ class ProjectView extends React.Component {
           </div>
         )}
 
-        <TaskList taskList={this.state.taskList} isDetailsView={true} />
+        <TaskList taskList={this.state.taskList} isDetailsView={true} onEditTask={this.onEditTask} />
       </>
     );
   }
