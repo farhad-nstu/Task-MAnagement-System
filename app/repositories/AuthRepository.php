@@ -7,6 +7,7 @@ use App\interfaces\AuthInterface;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class AuthRepository implements AuthInterface
 {
@@ -23,7 +24,8 @@ class AuthRepository implements AuthInterface
         $user = new User();
         $user->name = $request->name;
         $user->email = $request->email;
-        $user->password = $request->password;
+        $user->password = Hash::make($request->password);
+        // $user->password = $request->password;
         $user->save();
         return $user;
     }

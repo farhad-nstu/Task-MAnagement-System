@@ -11,7 +11,7 @@ use App\repositories\AuthRepository;
 
 class AuthAPIController extends Controller
 {
-	public $authRepository;
+    public $authRepository;
 
     public function __construct(AuthRepository $authRepository)
     {
